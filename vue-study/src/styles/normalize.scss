@@ -22,8 +22,9 @@ html {
  * Remove the margin in all browsers (opinionated).
  */
 
-body {
+html,body,ul {
   margin: 0;
+  padding: 0;
 }
 
 /**

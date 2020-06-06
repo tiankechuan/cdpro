@@ -20,7 +20,7 @@
                             <el-input v-model="ruleForm.code"></el-input>
                         </el-col>
                         <el-col :span="9">
-                            <el-button class="block" @click="getCode" type="success">获取验证码</el-button>
+                            <el-button class="block" type="success">获取验证码</el-button>
                         </el-col>
                     </el-row>
                 </el-form-item>
@@ -33,67 +33,48 @@
 </template>
 
 <script>
-    import {reactive, onMounted} from '@vue/composition-api'
-    import {GetSms} from '@/api/sys'
     export default {
         name: "login",
-        setup(props, {refs}) {
-            //声明数据
-            const tabList = reactive([
-                {"name": "登录", isActive: true},
-                {"name": "注册", isActive: false},
-            ])
-
-            const ruleForm = reactive({
-                username: '',
-                password: '',
-                code: ''
-            })
-
-            const rules = reactive({
-                username: [
-                    {required: true, message: '请输入用户名', trigger: 'blur'}
+        data() {
+            return {
+                tabList: [
+                    {"name": "登录", isActive: true},
+                    {"name": "注册", isActive: false},
                 ],
-                password: [
-                    {required: true, message: '请输入密码', trigger: 'blur'}
-                ],
-                code: [
-                    {required: true, message: '请输入验证码', trigger: 'blur'}
-                ]
-            })
-
-            //申明方法
-            const toggleTab = (tab) => {
-                tabList.forEach((item) => {
+                ruleForm: {
+                    username: '',
+                    password: '',
+                    code: ''
+                },
+                rules: {
+                    username: [
+                        { required: true, message: '请输入用户名', trigger: 'blur' }
+                    ],
+                    password: [
+                        { required: true, message: '请输入密码', trigger: 'blur' }
+                    ],
+                    code: [
+                        { required: true, message: '请输入验证码', trigger: 'blur' }
+                    ]
+                }
+            }
+        },
+        methods: {
+            toggleTab(tab) {
+                this.tabList.forEach((item) => {
                     item.isActive = false;
                 })
                 tab.isActive = true;
-            }
-            const submitForm = (formName) => {
-                refs[formName].validate((valid) => {
+            },
+            submitForm(formName) {
+                this.$refs[formName].validate((valid) => {
                     if (valid) {
-
+                        alert('submit!');
                     } else {
                         console.log('error submit!!');
                         return false;
                     }
                 });
-            }
-
-            const getCode = () => {
-                GetSms()
-            }
-
-            onMounted(() => {
-
-            })
-            return {
-                tabList,
-                ruleForm,
-                rules,
-                toggleTab,
-                getCode,
-                submitForm
             }
         }
     }
@@ -105,14 +86,12 @@
         height: 100vh;
         display: flex;
         align-items: center;
-
         .login-wrap {
             width: 338px;
             margin: auto;
 
             .tab-ul {
                 text-align: center;
-
                 li {
                     display: inline-block;
                     width: 88px;
@@ -128,10 +107,8 @@
                 }
             }
         }
-
         .login-form {
             margin-top: 29px;
-
             label {
                 display: block;
                 color: #fff;
@@ -141,7 +118,6 @@
 
             .login-item {
                 margin-bottom: 13px;
-
                 .block {
                     display: block;
                     width: 100%;
